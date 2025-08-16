@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>UsefulAF Tools by Basilius Tengang</title>
+    <meta
+      name="description"
+      content="Operation UsefulAF is a collection of lightweight, fun, and actually useful tools built by Basilius Tengang. Free QR Code Generator, Color Format Converter, and more."
+    />
+    <meta
+      name="keywords"
+      content="UsefulAF, QR Code Generator, Color Converter, Developer Tools, Basilius Tengang, Web Utilities"
+    />
+    <meta name="author" content="Basilius Tengang" />
+
+    <!-- Favicons (script will update hrefs) -->
+    <link
+      rel="icon"
+      id="favicon-default"
+      href="/logos/logo-light.webp"
+      type="image/webp"
+    />
+    <link
+      rel="icon"
+      id="favicon-32"
+      href="/logos/logo-light-32x32.webp"
+      type="image/webp"
+      sizes="32x32"
+    />
+    <link
+      rel="alternate icon"
+      id="favicon-png-default"
+      href="/logos/logo-light.png"
+      type="image/png"
+    />
+    <link
+      rel="alternate icon"
+      id="favicon-png-32"
+      href="/logos/logo-light-32x32.png"
+      type="image/png"
+    />
+
+    <!-- Preload hero/background asset -->
+    <link
+      rel="preload"
+      as="image"
+      href="/ui/distinguished-bg.webp"
+      type="image/webp"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="UsefulAF Tools by Basilius Tengang" />
+    <meta
+      property="og:description"
+      content="A growing collection of free, useful tools — QR code generator, color converters, and more — built fast by Basilius Tengang."
+    />
+    <meta
+      property="og:image"
+      content="https://basiliustengang.com/ui/distinguished-gentleman2.webp"
+    />
+    <meta property="og:url" content="https://basiliustengang.com/tools" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="UsefulAF Tools by Basilius Tengang" />
+    <meta
+      name="twitter:description"
+      content="Lightweight, useful developer tools like free QR code generators and converters — by Basilius Tengang."
+    />
+    <meta
+      name="twitter:image"
+      content="https://basiliustengang.com/ui/distinguished-gentleman2.webp"
+    />
+
+    <link rel="canonical" href="https://basiliustengang.com/tools" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "UsefulAF Tools",
+        "url": "https://basiliustengang.com/tools",
+        "creator": {
+          "@type": "Person",
+          "name": "Basilius Tengang",
+          "url": "https://basiliustengang.com"
+        },
+        "description": "Operation UsefulAF — free tools like a QR Code Generator, Color Converter, and more by Basilius Tengang."
+      }
+    </script>
+  </head>
+
+  <body>
+    <noscript>
+      <h1>UsefulAF Tools by Basilius Tengang</h1>
+      <p>
+        Operation UsefulAF is a collection of lightweight, actually useful
+        developer tools including a QR code generator, color converter, and
+        more. All free, built by Basilius Tengang.
+      </p>
+    </noscript>
+
+    <h1 style="position: absolute; left: -9999px">
+      UsefulAF Tools by Basilius Tengang
+    </h1>
+
+    <div id="root"></div>
+
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Favicon switcher: selects light logo when user's browser theme is dark and vice versa.
+         Uses WebP when supported, PNG as fallback. -->
+    <script>
+      (function () {
+        const $ = (id) => document.getElementById(id);
+
+        const webpTest = () =>
+          new Promise((res) => {
+            const img = new Image();
+            img.onload = () => res(img.width === 1 && img.height === 1);
+            img.onerror = () => res(false);
+            img.src =
+              "data:image/webp;base64,UklGRiIAAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+          });
+
+        const buildPaths = (mode, ext) => ({
+          default: `/logos/logo-${mode}.${ext}`,
+          small: `/logos/logo-${mode}-32x32.${ext}`,
+        });
+
+        async function updateFavicons(
+          userTheme /* 'light'|'dark' */,
+          preferWebp
+        ) {
+          // invert: if user's theme is dark -> use light logo; if light -> use dark logo
+          const logoMode = userTheme === "dark" ? "light" : "dark";
+          const ext = preferWebp ? "webp" : "png";
+          const paths = buildPaths(logoMode, ext);
+
+          const favDefault = $("favicon-default");
+          if (favDefault) {
+            favDefault.href = paths.default;
+            favDefault.type = preferWebp ? "image/webp" : "image/png";
+          }
+
+          const fav32 = $("favicon-32");
+          if (fav32) {
+            fav32.href = paths.small;
+            fav32.type = preferWebp ? "image/webp" : "image/png";
+          }
+
+          const favPngDefault = $("favicon-png-default");
+          const favPng32 = $("favicon-png-32");
+          if (favPngDefault)
+            favPngDefault.href = buildPaths(logoMode, "png").default;
+          if (favPng32) favPng32.href = buildPaths(logoMode, "png").small;
+        }
+
+        function getInitialTheme() {
+          const stored = localStorage.getItem("preferred-theme");
+          if (stored === "light" || stored === "dark") return stored;
+          return window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        window.setPreferredTheme = async function (mode) {
+          if (mode !== "dark" && mode !== "light") return;
+          localStorage.setItem("preferred-theme", mode);
+          const preferWebp = await webpTest();
+          updateFavicons(mode, preferWebp);
+        };
+
+        (async function init() {
+          const preferWebp = await webpTest();
+          const initialTheme = getInitialTheme();
+          updateFavicons(initialTheme, preferWebp);
+
+          if (window.matchMedia) {
+            const mq = window.matchMedia("(prefers-color-scheme: dark)");
+            const listener = (e) => {
+              const stored = localStorage.getItem("preferred-theme");
+              if (!stored)
+                updateFavicons(e.matches ? "dark" : "light", preferWebp);
+            };
+            if (mq.addEventListener) mq.addEventListener("change", listener);
+            else mq.addListener(listener);
+          }
+        })();
+      })();
+    </script>
+  </body>
+</html>

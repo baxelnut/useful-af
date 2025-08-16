@@ -1,0 +1,25 @@
+.qr-generator {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.qr-input-container,
+.qr-generated-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: var(--card-border);
+}
+
+.qr-generated-container {
+  flex: 1;
+  align-items: center;
+}
+
+

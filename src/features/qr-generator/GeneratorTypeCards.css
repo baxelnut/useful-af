@@ -1,0 +1,26 @@
+.cards-container.generators {
+  gap: 0.5rem;
+  justify-content: start;
+}
+
+.card.generator-type {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.card.generator-type.active {
+  background-color: var(--card-bg);
+  border-bottom: var(--card-border);
+}
+
+.card.generator-type:hover {
+  background-color: var(--card-bg);
+  transform: translate(0);
+  box-shadow: none;
+}

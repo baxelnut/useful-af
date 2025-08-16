@@ -1,0 +1,11 @@
+.cards-container.tabs {
+  gap: 0.5rem;
+}
+
+.card.tab {
+  cursor: pointer;
+}
+
+.card.tab.active {
+  background-color: rgba(var(--primary-rgb), 1);
+}

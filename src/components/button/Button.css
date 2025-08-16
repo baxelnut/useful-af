@@ -1,0 +1,79 @@
+.btn,
+.hollow,
+.full {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 12px 23px;
+  background-color: var(--secondary);
+  border-radius: 360px;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  font-family: var(--btn-font);
+  font-size: 1em;
+  font-weight: 600 !important;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.hollow {
+  background-color: var(--card-bg);
+  border: var(--card-border);
+}
+
+.full {
+  width: 100%;
+}
+
+.rounded-pill {
+  border-radius: 360px;
+}
+
+.rounded-soft {
+  border-radius: 0.25rem;
+}
+
+.short {
+  padding: 6px 14px !important;
+  line-height: 1;
+  max-height: 36px;
+}
+
+.btn button:focus,
+.btn button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.btn:hover,
+.hollow:hover,
+.full:hover {
+  background-color: rgba(var(--secondary-rgb), 0.5);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .btn,
+  .full {
+    padding: 11px 21px;
+  }
+
+  .hollow {
+    padding: 9px 19px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .btn,
+  .full {
+    padding: 8px 20px;
+  }
+
+  .hollow {
+    padding: 8px 18px;
+  }
+}

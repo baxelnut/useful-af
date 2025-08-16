@@ -1,0 +1,86 @@
+#root {
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  text-align: center;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+/* Global card */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 0.5rem;
+  background-color: var(--card-bg);
+  border: var(--card-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  text-align: start;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Global style for cards containers */
+.cards-container,
+.cards-container.grid2,
+.cards-container.grid3,
+.cards-container.grid4 {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.cards-container.row,
+.cards-container.col {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.cards-container.row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.cards-container.col {
+  flex-direction: column;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .cards-container.grid2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-container, /* defalut is grid 3 */
+  .cards-container.grid3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards-container.grid4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Dekstop hover (optional but classy) */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+    background-color: rgba(var(--text-rgb), 0.05);
+  }
+}
