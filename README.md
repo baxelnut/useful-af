@@ -1,12 +1,30 @@
-# React + Vite
+# Operation UsefulAF
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Operation UsefulAF**. The project that wasn’t supposed to exist but now does because I couldn’t mind my business.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🤡 What is this?
+Honestly I don’t even know. Some mix of:
+- Tools I built instead of touching grass  
+- Features nobody asked for but are now canon  
+- Code that started as a “what if” and ended up ruining my weekend  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Why the name?
+Because “Operation Kinda-Helpful” didn’t slap.  
+Everything here somehow ends up being **Useful AF**, against all odds.  
+
+---
+
+## Mission Statement
+- Step 1: Build random shit  
+- Step 2: Accidentally make useful shit 
+- Step 3: Get my shit together
+- Step 3: Pretend the shit was the plan all along  
+
+---
+
+## Status
+Still cooking. Might ship. Might not.
