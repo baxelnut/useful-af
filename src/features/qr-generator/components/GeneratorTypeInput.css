@@ -3,8 +3,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  text-align: start;
+  justify-content: center;
+  text-align: start;  
 }
 
 .qr-generator .generator-type-input em {

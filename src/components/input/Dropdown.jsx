@@ -10,10 +10,15 @@ export default function Dropdown({
   value = "",
   onChange = () => {},
   hasChevron = false,
+  short = false,
 }) {
   return (
     <div className="dropdown-wrapper">
-      <select className="dropdown" value={value} onChange={onChange}>
+      <select
+        className={`dropdown ${short ? "short" : ""}`}
+        value={value}
+        onChange={onChange}
+      >
         {options.map((option) =>
           option.options ? (
             <optgroup key={option.label} label={option.label}>

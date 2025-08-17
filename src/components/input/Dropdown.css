@@ -33,9 +33,15 @@ option {
 .dropdown-icon {
   position: absolute;
   right: 0.75rem;
-  top: 50%; 
+  top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
+}
+
+.dropdown.short {
+  height: fit-content;
+  min-height: 0;
+  padding: 0;
 }
 
 /* To ensure consistency across browsers (some handle select padding weirdly) */

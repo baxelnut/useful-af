@@ -21,6 +21,7 @@
 .qr-generated-container {
   flex: 1;
   align-items: center;
+  gap: 2rem;
 }
 
 /* Tablet and up */

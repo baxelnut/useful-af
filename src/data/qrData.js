@@ -1,6 +1,15 @@
 // Data
 import { SVG_PATHS } from "./utilsData";
 
+export const MODULE_OPTIONS = [
+  { value: "square", label: "Square" },
+  { value: "dots", label: "Dots" },
+  { value: "rounded", label: "Rounded" },
+  { value: "extra-rounded", label: "Extra Rounded" },
+  { value: "classy", label: "Classy" },
+  { value: "classy-rounded", label: "Classy Rounded" },
+];
+
 export const INPUT_TYPE = [
   {
     key: "url",

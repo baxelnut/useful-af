@@ -23,6 +23,7 @@ export default function Input({
   minHeight = "100px",
   expandable = false,
   noBorder = false,
+  maxLength,
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password" && obscurial;
@@ -46,6 +47,9 @@ export default function Input({
       <div className="input-container">
         {isTextarea || noBorder ? (
           <textarea
+            className={`custom-input ${resizable ? "resizable" : ""} ${
+              noBorder ? "no-border" : ""
+            }`}
             id={name}
             name={name}
             ref={textareaRef}
@@ -55,9 +59,7 @@ export default function Input({
             required={required}
             autoFocus={autoFocus}
             disabled={disabled}
-            className={`custom-input ${resizable ? "resizable" : ""} ${
-              noBorder ? "no-border" : ""
-            }`}
+            maxLength={maxLength}
             rows={expandable ? 1 : 6}
             style={{
               resize: resizable ? "vertical" : "none",
@@ -67,6 +69,7 @@ export default function Input({
         ) : (
           <>
             <input
+              className={`custom-input ${noBorder ? "no-border" : ""}`}
               id={name}
               name={name}
               type={isPassword && showPassword ? "text" : type}
@@ -76,7 +79,7 @@ export default function Input({
               required={required}
               autoFocus={autoFocus}
               disabled={disabled}
-              className={`custom-input ${noBorder ? "no-border" : ""}`}
+              maxLength={maxLength}
             />
             {isPassword && (
               <button

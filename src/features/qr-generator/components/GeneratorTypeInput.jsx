@@ -12,7 +12,7 @@ export default function GeneratorTypeInput({
   detectType,
 }) {
   const handleChange = (e) => {
-    const v = e.target.value;
+    const v = e.target.value.slice(0, 2000); // limit to 2000 chars
     setInput(v);
     const detected = detectType(v);
     if (detected && detected !== selectedType) {
@@ -26,6 +26,9 @@ export default function GeneratorTypeInput({
 
   return (
     <div className="generator-type-input">
+      <em className="small-p">
+        (Your QR Code will be generated automatically)
+      </em>
       <Input
         type="text"
         placeholder={placeholder}
@@ -34,9 +37,6 @@ export default function GeneratorTypeInput({
         fullWidth
         noBorder
       />
-      <em className="small-p">
-        (Your QR Code will be generated automatically)
-      </em>
     </div>
   );
 }

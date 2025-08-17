@@ -1,0 +1,32 @@
+.expandable-dropdown .dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--card-bg);
+  cursor: pointer;
+}
+
+/* closed state */
+.expandable-dropdown .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 1rem;
+  transition: max-height 0.4s ease, opacity 0.2s ease, padding 0.4s ease;
+}
+
+/* expanded state */
+.expandable-dropdown .dropdown-content.expanded {
+  max-height: 500px;
+  opacity: 1;
+  padding: 1rem;
+}
+
+.expandable-dropdown .rotated {
+  transform: rotate(180deg);
+  transition: transform 0.4s ease;
+}
