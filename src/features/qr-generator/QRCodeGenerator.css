@@ -1,6 +1,7 @@
 .qr-generator {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: stretch;
   gap: 1rem;
 }
@@ -22,4 +23,9 @@
   align-items: center;
 }
 
-
+/* Tablet and up */
+@media (min-width: 768px) {
+  .qr-generator {
+    flex-direction: row;
+  }
+}

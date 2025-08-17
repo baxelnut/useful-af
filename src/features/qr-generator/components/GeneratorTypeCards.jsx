@@ -1,11 +1,11 @@
 // Style
 import "./GeneratorTypeCards.css";
 // Components
-import Icon from "../../components/ui/Icon";
+import Icon from "../../../components/ui/Icon";
 
 export default function GeneratorTypeCards({
   selectedType,
-  setSelectedType,
+  onSelectType,
   GENERATOR_TYPE,
 }) {
   return (
@@ -16,7 +16,7 @@ export default function GeneratorTypeCards({
           className={`card generator-type ${
             selectedType === gen.key ? "active" : ""
           }`}
-          onClick={() => setSelectedType(gen.key)}
+          onClick={() => onSelectType(gen.key)}
         >
           <Icon path={gen.icon} />
           <p className="small-p">{gen.label}</p>

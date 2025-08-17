@@ -11,7 +11,7 @@ export default function App() {
   const [selected, setSelected] = useState(null);
 
   return (
-    <div className={`page ${selected?.id || ""}`}>
+    <div className="page">
       <Hero
         featuresRoutes={featuresRoutes}
         selected={selected}

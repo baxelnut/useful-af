@@ -1,10 +1,10 @@
 // Style
 import "./ActionButtons.css";
 // Components
-import Button from "../../components/button/Button";
-import Dropdown from "../../components/input/Dropdown";
+import Button from "../../../components/button/Button";
+import Dropdown from "../../../components/input/Dropdown";
 // Data
-import { SVG_PATHS, FORMAT_OPT, QUALITY_CONTROL } from "../../data/utilsData";
+import { SVG_PATHS, FORMAT_OPT, QUALITY_CONTROL } from "../../../data/utilsData";
 
 export default function ActionButtons({
   handleDownload,
