@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
 // Style
 import "./Output.css";
+// Components
+import Button from "../../../components/button/Button";
 
 export default function Output({
   input,
@@ -10,6 +12,11 @@ export default function Output({
   bgColor = "#ffffff",
   moduleShape = "square",
   eyeShape = "square",
+  image = null, // logo URL / data URI
+  logoUrl,
+  onRemoveLogo,
+  autoLogo,
+  setAutoLogo,
 }) {
   const mountRef = useRef(null);
   const instanceRef = useRef(null);
@@ -26,35 +33,62 @@ export default function Output({
         backgroundOptions: { color: bgColor },
         cornersSquareOptions: { color: fgColor, type: eyeShape },
         cornersDotOptions: { color: fgColor, type: eyeShape },
+        image: image || undefined,
+        imageOptions: {
+          crossOrigin: "anonymous",
+          hideBackgroundDots: true,
+          imageSize: 0.2,
+        },
       });
 
       if (mountRef.current) instanceRef.current.append(mountRef.current);
     }
 
+    // always update QR
     instanceRef.current.update({
       data: input || "",
       dotsOptions: { color: fgColor, type: moduleShape },
       backgroundOptions: { color: bgColor },
       cornersSquareOptions: { color: fgColor, type: eyeShape },
       cornersDotOptions: { color: fgColor, type: eyeShape },
+      image: autoLogo ? image : null,
+      imageOptions: {
+        crossOrigin: "anonymous",
+        hideBackgroundDots: true,
+        imageSize: 0.3,
+      },
     });
 
-    if (qrRef) qrRef.current = mountRef.current; // expose DOM container to parent via qrRef
+    if (qrRef) qrRef.current = mountRef.current;
 
     return () => {
-      // keep instance around for faster update, but if unmounting clear DOM
       if (mountRef.current) mountRef.current.innerHTML = "";
     };
-  }, [input, fgColor, bgColor, moduleShape, eyeShape, qrRef]);
+  }, [input, fgColor, bgColor, moduleShape, eyeShape, image, autoLogo, qrRef]);
 
   return (
-    <div className="qr-output">
+    <div className="qr-output" style={{ position: "relative" }}>
       {!input && (
         <em className="output-placeholder small-p">
           Your QR will be generated here.
         </em>
       )}
       <div ref={mountRef} />
+      <div className="logo-preview">
+        {input && (
+          <label className="logo-checkbox">
+            <input
+              type="checkbox"
+              checked={autoLogo}
+              onChange={(e) => setAutoLogo(e.target.checked)}
+            />
+            <span className="small-p">Auto assign logo by type</span>
+          </label>
+        )}
+        {logoUrl && autoLogo && (
+          <Button text="Remove Logo" onClick={onRemoveLogo} short hollow />
+        )}
+      </div>
     </div>
   );
 }

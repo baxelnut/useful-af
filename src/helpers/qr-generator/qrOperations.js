@@ -56,7 +56,7 @@ export const downloadQRCode = async (
   input,
   format,
   resolution,
-  qrDom, // DOM node returned by Output via qrRef
+  qrDom,
   fgColor = "#000000",
   bgColor = "#ffffff"
 ) => {

@@ -85,3 +85,15 @@ export const PREFILL = {
   telegram: "https://t.me/",
   github: "https://github.com/",
 };
+
+export const LOGO_MAP = {
+  instagram: "/logos/instagram.svg",
+  facebook: "/logos/facebook.svg",
+  x: "/logos/x.svg",
+  twitter: "/logos/x.svg",
+  github: "/logos/github.svg",
+  telegram: "/logos/telegram.svg",
+  wa: "/logos/whatsapp.svg",
+  wifi: "/logos/wifi.svg",
+  email: "/logos/email.svg",
+};

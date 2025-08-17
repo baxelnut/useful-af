@@ -8,7 +8,7 @@
 
 .qr-input-container,
 .qr-generated-container {
-  flex: 2;
+  flex: 3;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -19,9 +19,8 @@
 }
 
 .qr-generated-container {
-  flex: 1;
+  flex: 2;
   align-items: center;
-  gap: 2rem;
 }
 
 /* Tablet and up */

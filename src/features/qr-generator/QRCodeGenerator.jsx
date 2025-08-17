@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 // Style
 import "./QRCodeGenerator.css";
 // Components
@@ -8,9 +8,15 @@ import GeneratorTypeCards from "./components/GeneratorTypeCards";
 import GeneratorTypeInput from "./components/GeneratorTypeInput";
 import Output from "./components/Output";
 // Data
-import { INPUT_TYPE, PREFILL } from "../../data/qrData";
+import { INPUT_TYPE } from "../../data/qrData";
 // Helpers
-import { detectType } from "../../helpers/qr-generator/detectType";
+import {
+  handleTypeSelect,
+  handleInputChange,
+  recolorSvgLogo,
+  handleLogoFileUpload,
+  detectType,
+} from "../../helpers/qr-generator/qrHelpers";
 import {
   downloadQRCode,
   copyQRCode,
@@ -23,16 +29,44 @@ export default function QRCodeGenerator() {
   const [selectedType, setSelectedType] = useState("text");
   const [selectedFormat, setSelectedFormat] = useState("png");
   const [resolution, setResolution] = useState(1024);
-
+  // logo state
+  const [logoUrl, setLogoUrl] = useState(null); // dataURL or same-origin URL
+  const [autoLogo, setAutoLogo] = useState(true); // auto-assign based on type
   // customization state
   const [fgColor, setFgColor] = useState("#000000");
   const [bgColor, setBgColor] = useState("#ffffff");
   const [moduleShape, setModuleShape] = useState("square");
   const [eyeShape, setEyeShape] = useState("square");
 
-  const onSelectType = (key) => {
-    setSelectedType(key);
-    setInput(PREFILL[key] ?? "");
+  useEffect(() => {
+    if (logoUrl && logoUrl.endsWith(".svg")) {
+      recolorSvgLogo(logoUrl, fgColor).then(setLogoUrl);
+    }
+  }, [logoUrl, fgColor]);
+
+  // when user selects a tool type
+  const onSelectType = (key) =>
+    handleTypeSelect(key, autoLogo, setSelectedType, setInput, setLogoUrl);
+
+  // when input changes we might re-detect type and auto assign a logo
+  const onInputChange = (v) =>
+    handleInputChange(
+      v,
+      selectedType,
+      autoLogo,
+      setInput,
+      setSelectedType,
+      setLogoUrl
+    );
+
+  // file upload (user logo) -> convert to data URL and store
+  const handleLogoUpload = (file) =>
+    handleLogoFileUpload(file, setLogoUrl, setAutoLogo);
+
+  // remove logo from output img
+  const handleRemoveLogo = () => {
+    setLogoUrl(null);
+    setAutoLogo(false);
   };
 
   return (
@@ -45,7 +79,7 @@ export default function QRCodeGenerator() {
         />
         <GeneratorTypeInput
           input={input}
-          setInput={setInput}
+          setInput={onInputChange}
           selectedType={selectedType}
           setSelectedType={setSelectedType}
           detectType={detectType}
@@ -61,6 +95,11 @@ export default function QRCodeGenerator() {
           bgColor={bgColor}
           moduleShape={moduleShape}
           eyeShape={eyeShape}
+          image={logoUrl}
+          logoUrl={logoUrl}
+          onRemoveLogo={handleRemoveLogo}
+          autoLogo={autoLogo}
+          setAutoLogo={setAutoLogo}
         />
         <CustomizeQRCode
           fgColor={fgColor}
@@ -71,6 +110,7 @@ export default function QRCodeGenerator() {
           setModuleShape={setModuleShape}
           eyeShape={eyeShape}
           setEyeShape={setEyeShape}
+          onLogoUpload={handleLogoUpload}
         />
         <ActionButtons
           selectedFormat={selectedFormat}
@@ -83,6 +123,7 @@ export default function QRCodeGenerator() {
               f || selectedFormat,
               resolution,
               qrRef.current,
+              logoUrl,
               fgColor,
               bgColor
             )
@@ -93,6 +134,7 @@ export default function QRCodeGenerator() {
               f || selectedFormat,
               resolution,
               qrRef.current,
+              logoUrl,
               fgColor,
               bgColor
             )
@@ -103,6 +145,7 @@ export default function QRCodeGenerator() {
               f || selectedFormat,
               resolution,
               qrRef.current,
+              logoUrl,
               fgColor,
               bgColor,
               (fmt) =>
@@ -111,6 +154,7 @@ export default function QRCodeGenerator() {
                   fmt,
                   resolution,
                   qrRef.current,
+                  logoUrl,
                   fgColor,
                   bgColor
                 )

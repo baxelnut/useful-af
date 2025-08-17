@@ -4,6 +4,7 @@
 
 .card.tab {
   cursor: pointer;
+  padding: 0.25rem 0.5rem;
 }
 
 .card.tab.active {

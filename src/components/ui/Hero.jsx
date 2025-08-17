@@ -8,9 +8,9 @@ export default function Hero({ featuresRoutes, selected, setSelected }) {
 
   return (
     <div className="hero" style={{ backgroundImage: `url(${heroImage})` }}>
-      <h1 className="hero-title">
+      <h2 className="hero-title">
         {selected ? selected.label : "Yo whatchu want fool?👇"}
-      </h1>
+      </h2>
       <TabsContainer
         featuresRoutes={featuresRoutes}
         selected={selected}

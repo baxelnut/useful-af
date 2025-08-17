@@ -1,14 +1,28 @@
 .qr-output {
-  width: 260px;
+  width: 100%;
   height: 260px;
   aspect-ratio: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 2rem;
+  gap: 2rem;
+  margin-block: 4rem;
 }
 
 .output-placeholder {
   color: gray;
   font-weight: 400;
+}
+
+.qr-output .logo-preview,
+.qr-output .logo-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.qr-output .logo-preview {
+  width: 100%;
 }

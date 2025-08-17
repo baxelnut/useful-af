@@ -3,7 +3,6 @@ import "./CustomizeQRCode.css";
 // Components
 import ExpandableDropdown from "../../../components/input/ExpandableDropdown";
 import Dropdown from "../../../components/input/Dropdown";
-import Input from "../../../components/input/Input";
 // Data
 import { MODULE_OPTIONS } from "../../../data/qrData";
 
@@ -16,7 +15,14 @@ export default function CustomizeQRCode({
   setModuleShape,
   eyeShape,
   setEyeShape,
+  onLogoUpload,
 }) {
+  const handleFile = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) onLogoUpload(f);
+    e.target.value = ""; // reset input value so same file can be selected again
+  };
+
   return (
     <div className="customize-qr">
       <ExpandableDropdown
@@ -31,7 +37,6 @@ export default function CustomizeQRCode({
                 onChange={(e) => setFgColor(e.target.value)}
               />
             </label>
-
             <label className="expanded-row color">
               <p>Background</p>
               <input
@@ -73,20 +78,12 @@ export default function CustomizeQRCode({
       />
 
       <ExpandableDropdown
-        title="FRAME"
-        children={
-          <>
-            <Input placeholder="Type here..." type="text" fullWidth />
-          </>
-        }
-      />
-
-      <ExpandableDropdown
         title="LOGO"
         children={
-          <>
-            <p>skibidi toilet</p>
-          </>
+          <label className="expanded-row logo">
+            <p className="small-p">Upload custom logo?</p>
+            <input type="file" accept="image/*" onChange={handleFile} />
+          </label>
         }
       />
     </div>
