@@ -27,8 +27,9 @@ export default function ReadingTimeEstimator() {
         placeholder="Type or paste your text here..."
         value={text}
         onChange={(e) => setText(e.target.value)}
+        minHeight="300px"
         isTextarea
-        minHeight="420px"
+        resizable
         fullWidth
       />
 

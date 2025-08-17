@@ -11,9 +11,12 @@ export default function Dropdown({
   onChange = () => {},
   hasChevron = false,
   short = false,
+  label = "",
 }) {
   return (
     <div className="dropdown-wrapper">
+      {label && <label className="dropdown-label">{label}</label>}
+
       <select
         className={`dropdown ${short ? "short" : ""}`}
         value={value}

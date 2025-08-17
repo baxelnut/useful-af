@@ -6,7 +6,9 @@ import Icon from "../ui/Icon";
 import { SVG_PATHS } from "../../data/utilsData";
 
 export default function Button({
+  className = "",
   text = "Button",
+  title = "",
   arrow = false,
   iconPath = null,
   iconSize = 12,
@@ -20,6 +22,7 @@ export default function Button({
   short = null,
 }) {
   const classes = [
+    className ?? "",
     hollow ? "hollow" : "btn",
     fullWidth ? "full" : "",
     rounded ? "rounded-pill" : "rounded-soft",
@@ -56,6 +59,7 @@ export default function Button({
   const sharedProps = {
     className: classes,
     style: customStyle,
+    title: title,
   };
 
   if (href)

@@ -1,9 +1,7 @@
 // Features
 import AIGlorifier from "../features/ai-glorifier/AIGlorifier";
-import AnonymousFeedbackForm from "../features/anon-form/AnonymousFeedbackForm";
 import BackgroundRemover from "../features/bg-remover/BackgroundRemover";
 import EpicHashtagGenerator from "../features/hashtag-generator/EpicHashtagGenerator";
-import IPAddressFinder from "../features/ip-finder/IPAddressFinder";
 import LinkShortener from "../features/link-shortener/LinkShortener";
 import MoodPalette from "../features/mood-palette/MoodPalette";
 import QRCodeGenerator from "../features/qr-generator/QRCodeGenerator";
@@ -48,22 +46,10 @@ export const featuresRoutes = [
     heroImage: "/stock/oil-pink-1.webp",
   },
   {
-    component: <IPAddressFinder />,
-    id: "ip-finder",
-    label: "IP Address Finder",
-    heroImage: "/stock/oil-pink-2.webp",
-  },
-  {
-    component: <AnonymousFeedbackForm />,
-    id: "anon-form",
-    label: "Anonymous Feedback Form",
-    heroImage: "/stock/oil-colorful-1.webp",
-  },
-  {
     component: <MoodPalette />,
     id: "mood-palette",
     label: "Mood-Based Color Palette Picker",
-    heroImage: "/stock/oil-orange-1.webp",
+    heroImage: "/stock/oil-pink-2.webp",
   },
   {
     component: <AIGlorifier />,

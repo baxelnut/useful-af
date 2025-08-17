@@ -182,3 +182,13 @@ export const QUALITY_CONTROL = [
   { value: "1024", label: "1024 px" },
   { value: "2048", label: "2048 px" },
 ];
+
+export const QUANTITY_CONTROL = [
+  { value: 10, label: "10" },
+  { value: 15, label: "15" },
+  { value: 30, label: "30" },
+  { value: 50, label: "50" },
+  { value: 100, label: "100" },
+  { value: 500, label: "500 🚬" },
+  { value: 1000000, label: "1 Million 🍻" },
+];

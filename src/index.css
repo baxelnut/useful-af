@@ -97,7 +97,8 @@ select,
 option,
 li,
 a,
-blockquote {
+blockquote,
+label {
   font-size: clamp(0.9rem, 0.9vw, 1rem);
 }
 

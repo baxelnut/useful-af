@@ -10,7 +10,13 @@ option {
 .dropdown-wrapper {
   width: fit-content;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown-label {
+  width: 100%;
 }
 
 .dropdown {

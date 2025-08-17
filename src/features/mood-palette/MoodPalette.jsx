@@ -4,7 +4,7 @@ import "./MoodPalette.css";
 export default function MoodPalette() {
   return (
     <div className="mood-palette">
-      <h1>MoodPalette</h1>
+      <p>Soon</p>
     </div>
   );
 }
