@@ -24,12 +24,6 @@ export const INPUT_TYPE = [
     placeholder: "Enter text...",
   },
   {
-    key: "email",
-    label: "Email",
-    icon: SVG_PATHS.email,
-    placeholder: "Enter email address...",
-  },
-  {
     key: "wifi",
     label: "WiFi",
     icon: SVG_PATHS.wifi,
@@ -95,5 +89,4 @@ export const LOGO_MAP = {
   telegram: "/logos/telegram.svg",
   wa: "/logos/whatsapp.svg",
   wifi: "/logos/wifi.svg",
-  email: "/logos/email.svg",
 };
