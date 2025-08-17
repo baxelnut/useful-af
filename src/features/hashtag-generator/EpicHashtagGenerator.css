@@ -17,8 +17,3 @@
   background: var(--secondary);
   color: white;
 }
-
-.hashtag-generator .hint {
-  color: rgba(var(--text-rgb), 0.75);
-  font-style: italic;
-}

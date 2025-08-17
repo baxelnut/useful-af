@@ -81,7 +81,7 @@ export default function EpicHashtagGenerator() {
 
       <div className="results">
         {hashtags.length === 0 ? (
-          <p className="muted">Type something to generate tags.</p>
+          <p className="hint">Type something to generate tags.</p>
         ) : (
           <div className="cards-container row tags-grid">
             {hashtags.map((t) => (

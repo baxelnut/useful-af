@@ -60,6 +60,11 @@
   flex-direction: column;
 }
 
+.hint {
+  color: rgba(var(--text-rgb), 0.75);
+  font-style: italic;
+}
+
 /* Tablet and up */
 @media (min-width: 768px) {
   .cards-container.grid2 {

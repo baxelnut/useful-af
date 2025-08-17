@@ -4,7 +4,7 @@ import "./Hero.css";
 import TabsContainer from "./TabsContainer";
 
 export default function Hero({ featuresRoutes, selected, setSelected }) {
-  const heroImage = selected?.heroImage || "/stock/oil-purple-1.webp"; // fallback
+  const heroImage = selected?.heroImage || "/stock/oil-black-1.webp"; // fallback
 
   return (
     <div className="hero" style={{ backgroundImage: `url(${heroImage})` }}>
