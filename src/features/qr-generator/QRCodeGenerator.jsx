@@ -7,7 +7,7 @@ import GeneratorTypeCards from "./components/GeneratorTypeCards";
 import GeneratorTypeInput from "./components/GeneratorTypeInput";
 import Output from "./components/Output";
 // Data
-import { GENERATOR_TYPE, PREFILL } from "../../data/qrData";
+import { INPUT_TYPE, PREFILL } from "../../data/qrData";
 // Helpers
 import { detectType } from "../../helpers/qr-generator/detectType";
 import {
@@ -34,7 +34,7 @@ export default function QRCodeGenerator() {
         <GeneratorTypeCards
           selectedType={selectedType}
           onSelectType={onSelectType}
-          GENERATOR_TYPE={GENERATOR_TYPE}
+          INPUT_TYPE={INPUT_TYPE}
         />
         <GeneratorTypeInput
           input={input}
@@ -42,7 +42,7 @@ export default function QRCodeGenerator() {
           selectedType={selectedType}
           setSelectedType={setSelectedType}
           detectType={detectType}
-          GENERATOR_TYPE={GENERATOR_TYPE}
+          INPUT_TYPE={INPUT_TYPE}
         />
       </div>
 

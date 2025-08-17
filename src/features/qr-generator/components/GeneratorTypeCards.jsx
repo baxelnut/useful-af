@@ -6,11 +6,11 @@ import Icon from "../../../components/ui/Icon";
 export default function GeneratorTypeCards({
   selectedType,
   onSelectType,
-  GENERATOR_TYPE,
+  INPUT_TYPE,
 }) {
   return (
     <div className="cards-container row generators">
-      {GENERATOR_TYPE.map((gen) => (
+      {INPUT_TYPE.map((gen) => (
         <div
           key={gen.key}
           className={`card generator-type ${

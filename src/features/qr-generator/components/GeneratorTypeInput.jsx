@@ -8,7 +8,7 @@ export default function GeneratorTypeInput({
   setInput,
   selectedType,
   setSelectedType,
-  GENERATOR_TYPE,
+  INPUT_TYPE,
   detectType,
 }) {
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ export default function GeneratorTypeInput({
     }
   };
 
-  const placeholder = GENERATOR_TYPE.find(
+  const placeholder = INPUT_TYPE.find(
     (g) => g.key === selectedType
   )?.placeholder;
 

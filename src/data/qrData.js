@@ -1,7 +1,7 @@
 // Data
 import { SVG_PATHS } from "./utilsData";
 
-export const GENERATOR_TYPE = [
+export const INPUT_TYPE = [
   {
     key: "url",
     label: "URL",
