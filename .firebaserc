@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "everyday-basil"
+  },
+  "targets": {
+    "everyday-basil": {
+      "hosting": {
+        "useful-as-fuck": [
+          "useful-as-fuck"
+        ]
+      }
+    }
+  }
+}

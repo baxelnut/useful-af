@@ -23,5 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
+.firebase
 .env
 firebase-debug.log
+deploy.ps1
