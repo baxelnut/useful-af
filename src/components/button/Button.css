@@ -51,7 +51,7 @@
 .btn:hover,
 .hollow:hover,
 .full:hover {
-  background-color: rgba(var(--secondary-rgb), 0.5);
+  background-color: rgba(var(--secondary-rgb), 0.5) !important;
 }
 
 /* Tablet */
