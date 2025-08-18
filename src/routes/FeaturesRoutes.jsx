@@ -19,13 +19,13 @@ export const featuresRoutes = [
   {
     component: <BackgroundRemover />,
     id: "bg-remover",
-    label: "Dope Background Remover",
+    label: "Background Remover",
     heroImage: "/stock/oil-purple-3.webp",
   },
   {
     component: <EpicHashtagGenerator />,
     id: "hashtag-generator",
-    label: "Epic Hashtag Generator",
+    label: "Hashtag Generator",
     heroImage: "/stock/oil-purple-3.webp",
   },
   {
@@ -43,13 +43,13 @@ export const featuresRoutes = [
   {
     component: <LinkShortener />,
     id: "link-shortener",
-    label: "Mini Link Shortener",
+    label: "Link Shortener",
     heroImage: "/stock/oil-pink-1.webp",
   },
   {
     component: <QRCodeGenerator />,
     id: "qr-generator",
-    label: "QR Code Generator with Extra Steps",
+    label: "QR Code Generator",
     heroImage: "/stock/oil-pink-2.webp",
   },
   {

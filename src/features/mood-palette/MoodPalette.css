@@ -1,64 +1,39 @@
 .mood-palette {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .mp-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  align-items: start;
-}
-
-.mp-header h2 {
-  margin: 0 0 0.2rem;
-  font-size: 1.5rem;
-}
-
-.mp-sub {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.9rem;
 }
 
 .mp-controls {
   display: flex;
-  gap: 0.6rem;
   align-items: center;
+  gap: 0.75rem;
 }
 
-.control-row {
+.control-col {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  align-items: start;
+  align-items: flex-start;
+  gap: 0.25rem;
 }
 
-/* body */
-.mp-body {
-  margin-top: 1rem;
+.cards-container.mp-actions {
+  justify-content: flex-start;
 }
 
-.mp-actions {
+.card.swatch {
   display: flex;
-  gap: 0.6rem;
-  margin: 0.6rem 0;
-}
-
-.palette-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0.8rem;
-  margin-top: 0.8rem;
-}
-
-.swatch {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 0.6rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  display: flex;
-  gap: 0.6rem;
   align-items: center;
+  flex-direction: row;
+  padding: 0.5rem;
 }
 
 .swatch .color {
@@ -66,31 +41,17 @@
   height: 64px;
   border-radius: 8px;
   cursor: pointer;
-  flex: 0 0 64px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .meta {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  flex: 1;
+  justify-content: space-between;
 }
 
 .meta .hex {
   font-family: monospace;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.meta .buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-.mp-foot {
-  margin-top: 1rem;
-  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+  font-size: 1rem;
 }
