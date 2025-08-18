@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 // Style
 import "./ScreenshotToText.css";
 // Components
@@ -6,17 +6,53 @@ import STTPreview from "./components/STTPreview";
 import STTOutput from "./components/STTOutput";
 // Hooks & helpers
 import { useOCR } from "../../hooks/useOCR";
-import {
-  handleDropEvent,
-  handlePasteEvent,
-  handleFileUpload,
-} from "../../helpers/fileHandler";
+import { handleFileUpload } from "../../helpers/fileHandler";
 
 export default function ScreenshotToText() {
   const [imgPreview, setImgPreview] = useState(null);
   const [copyLabel, setCopyLabel] = useState("Copy");
   const fileInputRef = useRef(null);
+  const containerRef = useRef(null);
   const { loading, progress, text, setText, recognize } = useOCR();
+
+  // Global drag & paste listeners on the container
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleDrop = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      let file = e.dataTransfer.files?.[0];
+      if (!file && e.dataTransfer.items) {
+        file = [...e.dataTransfer.items]
+          .map((i) => i.getAsFile())
+          .find(Boolean);
+      }
+      if (file) handleFile(file);
+    };
+
+    const handlePaste = (e) => {
+      e.preventDefault();
+      const items = e.clipboardData?.items || [];
+      const file = [...items]
+        .filter((i) => i.kind === "file")
+        .map((i) => i.getAsFile())
+        .find(Boolean);
+      if (file) handleFile(file);
+    };
+
+    el.addEventListener("drop", handleDrop);
+    el.addEventListener("dragover", (e) => e.preventDefault());
+    el.addEventListener("paste", handlePaste);
+
+    return () => {
+      el.removeEventListener("drop", handleDrop);
+      el.removeEventListener("dragover", (e) => e.preventDefault());
+      el.removeEventListener("paste", handlePaste);
+    };
+  }, []);
 
   const handleFile = (file) =>
     handleFileUpload(file, (url) => {
@@ -41,12 +77,7 @@ export default function ScreenshotToText() {
   };
 
   return (
-    <div
-      className="screenshot-to-text"
-      onDrop={(e) => handleDropEvent(e, handleFile)}
-      onDragOver={(e) => e.preventDefault()}
-      onPaste={(e) => handlePasteEvent(e, handleFile)}
-    >
+    <div ref={containerRef} className="screenshot-to-text" tabIndex={0}>
       <STTPreview
         loading={loading}
         imgPreview={imgPreview}
