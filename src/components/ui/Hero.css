@@ -1,4 +1,5 @@
 .hero {
+  width: 100%;
   min-height: 50vh;
   display: flex;
   flex-direction: column;
@@ -14,6 +15,7 @@
 }
 
 .hero::before {
+  width: 100%;
   content: "";
   position: absolute;
   inset: 0;
