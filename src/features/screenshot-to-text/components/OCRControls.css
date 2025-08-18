@@ -1,0 +1,11 @@
+.stt-actions {
+  justify-content: center !important;
+  gap: 0.5rem !important;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .stt-actions {
+    justify-content: end !important;
+  }
+}

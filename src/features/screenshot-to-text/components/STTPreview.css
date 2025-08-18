@@ -1,0 +1,30 @@
+.stt-preview {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.stt-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0;
+}
+
+.stt-preview img {
+  max-height: 40vh;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .stt-preview {
+    padding: 0;
+  }
+
+  .stt-preview img {
+    max-height: 50vh;
+  }
+}

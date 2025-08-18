@@ -1,0 +1,15 @@
+.screenshot-to-text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .screenshot-to-text {
+    flex-direction: row;
+  }
+}
