@@ -3,3 +3,50 @@ keys/
 .env
 deploy.log
 logs/
+
+# Python junk
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+
+# Virtual envs
+env/
+venv/
+.venv/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDE configs
+.vscode/
+.idea/
+
+# Build / dist
+build/
+dist/
+*.spec
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Secrets
+.env
+*.env
+
+# Rembg / onnx model cache (can be 100MB+)
+~/.u2net/
+~/.cache/
+~/.onnx/
+
+# If you download model weights inside repo
+*.onnx
+*.pth
