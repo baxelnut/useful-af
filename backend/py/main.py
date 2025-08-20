@@ -1,4 +1,3 @@
-# main.py
 import os
 import io
 from fastapi import FastAPI, UploadFile, File
@@ -9,11 +8,10 @@ from PIL import Image
 
 app = FastAPI()
 
-# Allow frontend origin 
 FRONTEND_ORIGINS = [
-    "https://toolbox.basiliustengang.com",  # prod
-    "http://localhost:5173",                # local dev
+    os.getenv("FRONTEND_ORIGIN", "https://toolbox.basiliustengang.com")
 ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=FRONTEND_ORIGINS,
@@ -31,7 +29,7 @@ async def remove_bg(file: UploadFile = File(...)):
     try:
         contents = await file.read()
         input_image = Image.open(io.BytesIO(contents)).convert("RGBA")
-        output_image = remove(input_image)   
+        output_image = remove(input_image)
         buf = io.BytesIO()
         output_image.save(buf, format="PNG")
         buf.seek(0)
