@@ -13,14 +13,14 @@ logger = logging.getLogger("bg-remover")
 app = FastAPI()
 
 
-# read FRONTEND_ORIGIN env and support comma-separated list
-_raw_origins = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173,https://toolbox.basiliustengang.com")
-# split and strip spaces and ignore empty
-FRONTEND_ORIGINS = [o.strip() for o in _raw_origins.split(",") if o.strip()]
-# CORS
+# read FRONTEND_ORIGIN env and support comma/semicolon-separated list
+_raw = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173,https://toolbox.basiliustengang.com")
+# strip stray quotes and replace semicolons with commas
+_clean = _raw.replace('"', "").replace("'", "").replace(";", ",")
+FRONTEND_ORIGINS = [o.strip() for o in _clean.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=FRONTEND_ORIGINS,   # exact origins allowed
+    allow_origins=FRONTEND_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
