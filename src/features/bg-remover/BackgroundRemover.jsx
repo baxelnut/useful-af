@@ -70,7 +70,6 @@ export default function BackgroundRemover() {
     } finally {
       setTimeout(() => {
         setLoading(false);
-        window.location.reload(); // Refresh window after every remove
       }, 350);
     }
   }
@@ -87,6 +86,7 @@ export default function BackgroundRemover() {
     setFile(null);
     setProgress(0);
     setLoading(false);
+    window.location.reload(); // Refresh window after every remove
   }
 
   return (
