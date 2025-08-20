@@ -1,5 +1,6 @@
 # main.py
 import os, io, logging
+import re
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.responses import StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,21 +13,37 @@ logger = logging.getLogger("bg-remover")
 
 app = FastAPI()
 
-
-# read FRONTEND_ORIGIN env and support comma/semicolon-separated list
+# --- robust origin parsing: extract valid http(s) URLs from env (ignores stray quotes/semicolons)
 _raw = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173,https://toolbox.basiliustengang.com")
-# strip stray quotes and replace semicolons with commas
-_clean = _raw.replace('"', "").replace("'", "").replace(";", ",")
-FRONTEND_ORIGINS = [o.strip() for o in _clean.split(",") if o.strip()]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=FRONTEND_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# find all http(s) urls, ignoring junk
+_found = re.findall(r"https?://[^\s,;'\"]+", _raw)
+FRONTEND_ORIGINS = [o.strip() for o in _found]
 
-# Print startup info 
+# If nothing found, default to localhost and toolbox
+if not FRONTEND_ORIGINS:
+    FRONTEND_ORIGINS = ["http://localhost:5173", "https://toolbox.basiliustengang.com"]
+
+# TEMP QUICK-TEST MODE:
+# If you want to quickly confirm this is not a CORS issue, set TEST_CORS_ALLOW_ALL=1
+# in Railway env to temporarily allow any origin (not for long-term production).
+if os.getenv("TEST_CORS_ALLOW_ALL", "") == "1":
+    logger.info("TEST_CORS_ALLOW_ALL=1 -> allowing all origins temporarily")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,   # set False if using "*"
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=FRONTEND_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
 logger.info("Allowed CORS origins: %s", FRONTEND_ORIGINS)
 logger.info("U2NET_HOME=%s", os.getenv("U2NET_HOME"))
 
@@ -39,16 +56,16 @@ except Exception as e:
     logger.exception("Failed to preload rembg session: %s", e)
     _session = None
 
-# small request size guard
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
+    origin = request.headers.get("origin", "<no-origin>")
     try:
         client = request.client.host if request.client else "unknown"
     except Exception:
         client = "unknown"
-    logger.info("REQ → %s %s from %s", request.method, request.url.path, client)
+    logger.info("REQ → %s %s from %s Origin=%s", request.method, request.url.path, client, origin)
     resp = await call_next(request)
-    logger.info("RESP ← %s %s", request.method, resp.status_code)
+    logger.info("RESP ← %s %s %s", request.method, resp.status_code, request.url.path)
     return resp
 
 @app.get("/")
