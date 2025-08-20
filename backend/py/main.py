@@ -12,18 +12,22 @@ logger = logging.getLogger("bg-remover")
 
 app = FastAPI()
 
+
+# read FRONTEND_ORIGIN env and support comma-separated list
+_raw_origins = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173,https://toolbox.basiliustengang.com")
+# split and strip spaces and ignore empty
+FRONTEND_ORIGINS = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 # CORS
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "https://toolbox.basiliustengang.com")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_ORIGIN],
+    allow_origins=FRONTEND_ORIGINS,   # exact origins allowed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Print startup info
-logger.info("FRONTEND_ORIGIN=%s", FRONTEND_ORIGIN)
+# Print startup info 
+logger.info("Allowed CORS origins: %s", FRONTEND_ORIGINS)
 logger.info("U2NET_HOME=%s", os.getenv("U2NET_HOME"))
 
 # Preload rembg session (so model is loaded once)
@@ -35,14 +39,17 @@ except Exception as e:
     logger.exception("Failed to preload rembg session: %s", e)
     _session = None
 
-# optional: small request size guard
+# small request size guard
 @app.middleware("http")
-async def limit_request_size(request: Request, call_next):
-    max_bytes = 8 * 1024 * 1024  # 8 MB
-    content_length = int(request.headers.get("content-length", 0))
-    if content_length and content_length > max_bytes:
-        return JSONResponse({"error": "File is too large"}, status_code=413)
-    return await call_next(request)
+async def log_requests(request: Request, call_next):
+    try:
+        client = request.client.host if request.client else "unknown"
+    except Exception:
+        client = "unknown"
+    logger.info("REQ → %s %s from %s", request.method, request.url.path, client)
+    resp = await call_next(request)
+    logger.info("RESP ← %s %s", request.method, resp.status_code)
+    return resp
 
 @app.get("/")
 def root():
