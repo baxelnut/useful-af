@@ -1,10 +1,9 @@
-# main.py
 import os, io, logging
 import re
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.responses import StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from rembg import remove as rembg_remove  # function
+from rembg import remove as rembg_remove
 from rembg.session_factory import new_session
 from PIL import Image
 
@@ -13,25 +12,20 @@ logger = logging.getLogger("bg-remover")
 
 app = FastAPI()
 
-# --- robust origin parsing: extract valid http(s) URLs from env (ignores stray quotes/semicolons)
 _raw = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173,https://toolbox.basiliustengang.com")
-# find all http(s) urls, ignoring junk
+
 _found = re.findall(r"https?://[^\s,;'\"]+", _raw)
 FRONTEND_ORIGINS = [o.strip() for o in _found]
 
-# If nothing found, default to localhost and toolbox
 if not FRONTEND_ORIGINS:
     FRONTEND_ORIGINS = ["http://localhost:5173", "https://toolbox.basiliustengang.com"]
 
-# TEMP QUICK-TEST MODE:
-# If you want to quickly confirm this is not a CORS issue, set TEST_CORS_ALLOW_ALL=1
-# in Railway env to temporarily allow any origin (not for long-term production).
 if os.getenv("TEST_CORS_ALLOW_ALL", "") == "1":
     logger.info("TEST_CORS_ALLOW_ALL=1 -> allowing all origins temporarily")
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
-        allow_credentials=False,   # set False if using "*"
+        allow_credentials=False,
         allow_methods=["*"],
         allow_headers=["*"],
     )
@@ -47,10 +41,10 @@ else:
 logger.info("Allowed CORS origins: %s", FRONTEND_ORIGINS)
 logger.info("U2NET_HOME=%s", os.getenv("U2NET_HOME"))
 
-# Preload rembg session (so model is loaded once)
+
 _session = None
 try:
-    _session = new_session()  # uses U2NET_HOME env to find model
+    _session = new_session()
     logger.info("Rembg session preloaded")
 except Exception as e:
     logger.exception("Failed to preload rembg session: %s", e)

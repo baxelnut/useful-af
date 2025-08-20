@@ -58,9 +58,7 @@ export default function BackgroundRemover() {
     if (!selectedFile) return;
     setLoading(true);
     setProgress(0);
-
     const controller = startFakeProgress((p) => setProgress(p));
-
     try {
       const url = await removeBackground(selectedFile, REMOVE_ENDPOINT);
       // ensure fake progress finishes smoothly
