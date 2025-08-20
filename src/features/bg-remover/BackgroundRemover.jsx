@@ -1,73 +1,149 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 // Style
 import "./BackgroundRemover.css";
+// Components
+import Button from "../../components/button/Button";
+import LoadingBar from "../../components/utils/LoadingBar";
+// Helpers
+import { removeBackground } from "../../helpers/bg-remover/bgRemover";
+import { startFakeProgress } from "../../helpers/bg-remover/fakeProgress";
 
 export default function BackgroundRemover() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [resultUrl, setResultUrl] = useState(null);
   const [loading, setLoading] = useState(false);
-  // If you used "proxy" in package.json, use "/remove" here.
+  const [progress, setProgress] = useState(0);
+  const fileInputRef = useRef(null);
   const REMOVE_ENDPOINT = import.meta.env.VITE_API_URL
     ? `${import.meta.env.VITE_API_URL}/remove`
-    : "/remove"; // fallback if you set up a Vite proxy
+    : "/remove";
+
+  // cleanup object URLs when component unmounts or when urls change
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+    };
+  }, []);
+
+  useEffect(() => {
+    // revoke previous preview when new preview is set to avoid memory leaks
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
+
+  useEffect(() => {
+    // revoke result when replaced
+    return () => {
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+    };
+  }, [resultUrl]);
 
   function handleFile(e) {
-    const f = e.target.files[0];
+    const f = e.target.files?.[0];
     if (!f) return;
+    if (resultUrl) {
+      URL.revokeObjectURL(resultUrl);
+      setResultUrl(null); // clear any previous result
+    }
     setFile(f);
-    setPreview(URL.createObjectURL(f));
-    setResultUrl(null);
+    const p = URL.createObjectURL(f);
+    setPreview(p);
+    autoRemove(f); // auto trigger removal
   }
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!file) return;
+
+  async function autoRemove(selectedFile) {
+    if (!selectedFile) return;
     setLoading(true);
-    const form = new FormData();
-    form.append("file", file, file.name);
+    setProgress(0);
+
+    const controller = startFakeProgress((p) => setProgress(p));
+
     try {
-      const res = await fetch(REMOVE_ENDPOINT, {
-        method: "POST",
-        body: form,
-      });
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      const url = await removeBackground(selectedFile, REMOVE_ENDPOINT);
+      // ensure fake progress finishes smoothly
+      controller.stop(100);
       setResultUrl(url);
     } catch (err) {
+      controller.cancel();
       console.error(err);
       alert("Upload failed: " + err.message);
     } finally {
-      setLoading(false);
+      // give UI a small buffer so progress hits 100 and user sees it
+      setTimeout(() => {
+        setLoading(false);
+      }, 350);
     }
   }
+
+  function handleClear() {
+    if (preview) {
+      URL.revokeObjectURL(preview);
+      setPreview(null);
+    }
+    if (resultUrl) {
+      URL.revokeObjectURL(resultUrl);
+      setResultUrl(null);
+    }
+    setFile(null);
+    setProgress(0);
+    setLoading(false);
+  }
+
   return (
     <div className="bg-remover">
-      <h2>Background Remover</h2>
-      <form onSubmit={handleSubmit} className="u-form">
-        <input type="file" accept="image/*" onChange={handleFile} />
-        <button type="submit" disabled={!file || loading} className="btn">
-          {loading ? "Processing…" : "Remove Background"}
-        </button>
-      </form>
-      <div className="previews">
-        {preview && (
-          <div className="card">
-            <small>Original</small>
-            <img src={preview} alt="original preview" />
-          </div>
-        )}
-        {resultUrl && (
-          <div className="card">
-            <small>Result</small>
-            <img src={resultUrl} alt="result" />
-            <a href={resultUrl} download="no-bg.png" className="download">
-              Download PNG
-            </a>
-          </div>
+      <p className="hint">Transparent result is returned as PNG.</p>
+
+      <div className="cards-container row controls">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+          style={{ display: "none" }}
+        />
+
+        {!file ? (
+          <Button
+            text="Upload Image"
+            onClick={() => fileInputRef.current?.click()}
+          />
+        ) : (
+          <Button text="Remove" onClick={handleClear} hollow short />
         )}
       </div>
-      <p className="note">Tip: Transparent result is returned as PNG.</p>
+
+      {file && (
+        <div className="cards-container row previews">
+          <div className="card preview">
+            <p>Original</p>
+            {preview && <img src={preview} alt="original preview" />}
+          </div>
+
+          <div className="card result">
+            <p>Result</p>
+            {loading ? (
+              <LoadingBar
+                placeholder="Removing background…"
+                progress={progress}
+              />
+            ) : (
+              resultUrl && <img src={resultUrl} alt="result" />
+            )}
+          </div>
+        </div>
+      )}
+
+      {resultUrl && (
+        <Button
+          text="Download PNG"
+          href={resultUrl}
+          className="download"
+          download="no-bg.png"
+        />
+      )}
     </div>
   );
 }

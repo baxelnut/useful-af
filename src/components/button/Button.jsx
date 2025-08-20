@@ -20,6 +20,7 @@ export default function Button({
   backgroundColor = null,
   textColor = null,
   short = null,
+  download,
 }) {
   const classes = [
     className ?? "",
@@ -60,6 +61,7 @@ export default function Button({
     className: classes,
     style: customStyle,
     title: title,
+    download: download,
   };
 
   if (href)
