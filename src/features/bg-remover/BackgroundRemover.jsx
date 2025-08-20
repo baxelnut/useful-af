@@ -61,7 +61,6 @@ export default function BackgroundRemover() {
     const controller = startFakeProgress((p) => setProgress(p));
     try {
       const url = await removeBackground(selectedFile, REMOVE_ENDPOINT);
-      // ensure fake progress finishes smoothly
       controller.stop(100);
       setResultUrl(url);
     } catch (err) {
@@ -69,9 +68,9 @@ export default function BackgroundRemover() {
       console.error(err);
       alert("Upload failed: " + err.message);
     } finally {
-      // give UI a small buffer so progress hits 100 and user sees it
       setTimeout(() => {
         setLoading(false);
+        window.location.reload(); // Refresh window after every remove
       }, 350);
     }
   }
