@@ -10,10 +10,13 @@ from PIL import Image
 app = FastAPI()
 
 # Allow frontend origin 
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "https://toolbox.basiliustengang.com")
+FRONTEND_ORIGINS = [
+    "https://toolbox.basiliustengang.com",  # prod
+    "http://localhost:5173",                # local dev
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_ORIGIN],
+    allow_origins=FRONTEND_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
